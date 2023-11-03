@@ -1,9 +1,14 @@
 const app = require('express');
 const router = app.Router();
 const userModel = require('../Schema/user');
+const bcrypt = require('bcrypt');
 
 router.post('/' , async (req , res) => {
     console.log('body console----->' , req.body);
+    const salt = await bcrypt.genSaltSync(10);
+    const hash = await bcrypt.hashSync(req.body.password , salt);
+    req.body.password = hash
+    console.log('hash password-----> ', hash);
     const user = await userModel.create({...req.body})
     res.send({
         status : 200,
@@ -37,3 +42,4 @@ router.delete('/:id' , async (req , res) => {
 })
 
 module.exports = router
+
