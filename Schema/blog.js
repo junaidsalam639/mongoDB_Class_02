@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose
 
-
-const blogSchema = new mongoose.Schema({
-    title : {type : mongoose.SchemaTypes.String , required : true},
-    description : {type : mongoose.SchemaTypes.String  , required : true},
-    user : {type : mongoose.SchemaTypes.ObjectId , ref : 'users' , required : true},
+const blogSchema = new Schema({
+    title : {type : String , required : true},
+    description : {type : String  , required : true},
+    user : {type : ObjectId , ref : 'users' , required : true},
 })
 
 const blogModel = mongoose.model('blogs' , blogSchema);

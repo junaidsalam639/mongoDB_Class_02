@@ -1,24 +1,38 @@
 const app = require('express');
 const router = app.Router();
+const userModel = require('../Schema/user');
 
-router.post('/' , (req , res) => {
+router.post('/' , async (req , res) => {
     console.log('body console----->' , req.body);
-    res.send('Post Called on User Route');
-})
+    const user = await userModel.create({...req.body})
+    res.send({
+        status : 200,
+        user : user,
+        msg : 'Post Called on User Route',
+    });
+});
 
-router.get('/' , (req , res) => {
+
+router.get('/' , async (req , res) => {
     console.log('body query----->' , req.query);
-    res.send('Get Called on User Route');
+    const user = await userModel.find();
+    res.send({
+        status : 200,
+        user : user,
+        msg : 'Get Called on User Route',
+    });
 })
 
-router.put('/:id' , (req , res) => {
+router.put('/:id' , async (req , res) => {
     console.log('body params----->' , req.params.id);
+    const user = await userModel.findByIdAndUpdate(req.params.id, {...req.body});
     res.send('put Called on User Route');
 })
 
 
-router.delete('/:id' , (req , res) => {
+router.delete('/:id' , async (req , res) => {
     console.log('body params----->' , req.params.id);
+    const user = await userModel.findByIdAndDelete(req.params.id)
     res.send('delete Called on User Route');
 })
 
