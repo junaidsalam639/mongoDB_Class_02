@@ -1,19 +1,49 @@
-const route = require('express');
-const app = route.Router();
+const app = require('express');
+const router = app.Router();
+const blogModel = require('../Schema/blog');
+const sendResponse = require('../helpers/sendResponse');
 
-app.get('/' , (req , res) => {
-    console.log('Blog Request----->' , req.headers);
-    res.send( res.send('Get Called on Blog Route'));
+router.post('/', async (req, res) => {
+    try {
+        console.log('body console----->', req.body);
+        const blog = await blogModel.create({ ...req.body });
+        sendResponse(res, 200, blog, 'Blog_Add', false);
+    } catch (err) {
+        sendResponse(res, 400, null, 'Blog_Not_Found', true);
+    }
+});
+
+
+router.get('/', async (req, res) => {
+    try {
+        console.log('body query----->', req.query);
+        const blog = await blogModel.find().populate('user').exec();
+        sendResponse(res, 200, blog, 'Blog_Get_All', false);
+    } catch (err) {
+        sendResponse(res, 400, null, 'Blog_Not_Found', true);
+    }
 })
 
-app.post('/' , (req , res) => {
-    res.send({
-        status : 200,
-        msg : req.body
-    })
+router.put('/:id', async (req, res) => {
+    try {
+        console.log('body params----->', req.params.id);
+        const blog = await blogModel.findByIdAndUpdate(req.params.id, { ...req.body }, { new: true });
+        sendResponse(res, 200, blog, 'Blog_Updated', false);
+    } catch (err) {
+        sendResponse(res, 400, null, 'Blog_Not_Found', true);
+    }
 })
 
 
+router.delete('/:id', async (req, res) => {
+    try {
+        console.log('body params----->', req.params.id);
+        const blog = await blogModel.findByIdAndDelete(req.params.id)
+        sendResponse(res, 200, blog, 'Blog_Delete', false);
+    } catch (err) {
+        sendResponse(res, 400, null, 'Blog_Not_Found', true);
+    }
+})
 
-module.exports = app
+module.exports = router
 
