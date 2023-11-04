@@ -6,6 +6,14 @@ app.get('/' , (req , res) => {
     res.send( res.send('Get Called on Blog Route'));
 })
 
+app.post('/' , (req , res) => {
+    res.send({
+        status : 200,
+        msg : req.body
+    })
+})
+
+
 
 module.exports = app
 
