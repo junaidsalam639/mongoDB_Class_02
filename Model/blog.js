@@ -17,6 +17,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const blog = await blogModel.find().populate('user').exec();
+        console.log('All_Blogs---->',blog)
         sendResponse(res, 200, blog, 'Blog_Get_All', false);
     } catch (err) {
         sendResponse(res, 400, null, 'Blog_Not_Found', true);
