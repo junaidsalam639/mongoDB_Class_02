@@ -16,7 +16,6 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        console.log('body query----->', req.query);
         const blog = await blogModel.find().populate('user').exec();
         sendResponse(res, 200, blog, 'Blog_Get_All', false);
     } catch (err) {
