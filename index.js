@@ -16,13 +16,9 @@ mongoose.connect('mongodb+srv://Blog:blog@cluster0.4t24tdb.mongodb.net/').then((
     console.log(error);
 })
 
-
-
 app.get('/' , (req , res) => {
      res.status(200).send(new Date())
 })
-
-
 
 app.listen(3000 , () => {
     console.log('App is running on port 3000');
