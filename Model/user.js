@@ -29,6 +29,16 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+        console.log('body query----->', req.query);
+        const user = await userModel.findById(req.params.id);
+        sendResponse(res, 200, user, 'User_Get_One', false);
+    } catch (err) {
+        sendResponse(res, 400, null, 'User_Not_Found', true);
+    }
+})
+
 router.put('/:id', async (req, res) => {
     try {
         console.log('body params----->', req.params.id);
