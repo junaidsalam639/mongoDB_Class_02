@@ -3,7 +3,7 @@ const sendResponse = require('./sendResponse');
 require('dotenv').config();
 
 const authenticationJwt = async (req , res , next) => {
-    const authorize = req.headers.authorization.split(' ')[1];
+    const authorize = req.headers?.authorization?.split(' ')[1];
     console.log('authorization------>',authorize);
     if(authorize){
         const token = await jwt.verify(authorize , process.env.SECRET_KEY);
