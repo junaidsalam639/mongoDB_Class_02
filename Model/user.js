@@ -2,7 +2,10 @@ const app = require('express');
 const router = app.Router();
 const userModel = require('../Schema/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const sendResponse = require('../helpers/sendResponse');
+const authenticationJwt = require('../helpers/authenticationJwt');
 
 router.post('/', async (req, res) => {
     try {
@@ -18,8 +21,30 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await userModel.findOne({ email: email });
+        if (user) {
+            const isPasswordValid = await bcrypt.compareSync(password, user.password);
+            if (isPasswordValid) {
+                const token = await jwt.sign({
+                    data: user
+                }, process.env.SECRET_KEY)
+                sendResponse(res, 200, { user , token }, 'User_Login', false);
+            } else {
+                sendResponse(res, 400, null, 'Password Does Not Exist', true);
+            }
+        } else {
+            sendResponse(res, 400, null, 'Email Does Not Exist', true);
+        }
+    } catch (err) {
+        sendResponse(res, 400, null, 'User_Not_Found', true);
+    }
+});
 
-router.get('/', async (req, res) => {
+
+router.get('/', authenticationJwt , async (req, res) => {
     try {
         console.log('body query----->', req.query);
         const user = await userModel.find();
@@ -43,7 +68,7 @@ router.put('/:id', async (req, res) => {
     try {
         console.log('body params----->', req.params.id);
         const salt = await bcrypt.genSaltSync(10);
-        const hash = await bcrypt.hashSync(req.body.password , salt);
+        const hash = await bcrypt.hashSync(req.body.password, salt);
         req.body.password = hash
         const user = await userModel.findByIdAndUpdate(req.params.id, { ...req.body }, { new: true });
         sendResponse(res, 200, user, 'User_Updated', false);
