@@ -15,7 +15,7 @@ route.post('/' , async (req , res) => {
 route.get('/' , async (req , res) => {
     try{
         const resturant = await resturantModel.find({price : {$gte : 200 , $lte : 300}});
-        sendResponse(res , 200 , resturant , 'Resturant_Add' , false);
+        sendResponse(res , 200 , resturant , 'All_Foods_250_300' , false);
     }catch(err){
         sendResponse(res , 403 , null , 'Resturant_Not_Add' , true);
     }
@@ -24,7 +24,7 @@ route.get('/' , async (req , res) => {
 route.get('/:title/Burger' , async (req , res) => {
     try{
         const resturant = await resturantModel.find({title : 'Burger'});
-        sendResponse(res , 200 , resturant , 'Burger' , false);
+        sendResponse(res , 200 , resturant , 'Burger_All' , false);
     }catch(err){
         sendResponse(res , 403 , null , 'Resturant_Not_Add' , true);
     }
@@ -33,7 +33,7 @@ route.get('/:title/Burger' , async (req , res) => {
 route.get('/:title/Chicken' , async (req , res) => {
     try{
         const resturant = await resturantModel.find({title : 'Chicken'});
-        sendResponse(res , 200 , resturant , 'Chicken' , false);
+        sendResponse(res , 200 , resturant , 'Chicken_All' , false);
     }catch(err){
         sendResponse(res , 403 , null , 'Resturant_Not_Add' , true);
     }
