@@ -21,7 +21,7 @@ route.get('/' , async (req , res) => {
     }
 });
 
-route.get('/:Burger' , async (req , res) => {
+route.get('/:title/Burger' , async (req , res) => {
     try{
         const resturant = await resturantModel.find({title : 'Burger'});
         sendResponse(res , 200 , resturant , 'Burger_All' , false);
@@ -30,7 +30,7 @@ route.get('/:Burger' , async (req , res) => {
     }
 });
 
-route.get('/:Chicken' , async (req , res) => {
+route.get('/:title/Chicken' , async (req , res) => {
     try{
         const resturant = await resturantModel.find({title : 'Chicken'});
         sendResponse(res , 200 , resturant , 'Chicken_All' , false);
@@ -42,7 +42,3 @@ route.get('/:Chicken' , async (req , res) => {
 
 
 module.exports = route
-
-
-
-
