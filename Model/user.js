@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
 });
 
 
-router.get('/', authenticationJwt , async (req, res) => {
+router.get('/' , async (req, res) => {
     try {
         console.log('body query----->', req.query);
         const user = await userModel.find();
