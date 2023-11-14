@@ -7,6 +7,16 @@ require('dotenv').config();
 const sendResponse = require('../helpers/sendResponse');
 const authenticationJwt = require('../helpers/authenticationJwt');
 
+router.get('/' , async (req, res) => {
+    try {
+        const user = await userModel.find();
+        sendResponse(res, 200, user, 'User_Get_All', false);
+    } catch (err) {
+        sendResponse(res, 400, null, 'User_Not_Found', true);
+    }
+})
+
+
 router.post('/', async (req, res) => {
     try {
         console.log('body console----->', req.body);
@@ -44,15 +54,6 @@ router.post('/login', async (req, res) => {
 });
 
 
-router.get('/' , async (req, res) => {
-    try {
-        console.log('body query----->', req.query);
-        const user = await userModel.find();
-        sendResponse(res, 200, user, 'User_Get_All', false);
-    } catch (err) {
-        sendResponse(res, 400, null, 'User_Not_Found', true);
-    }
-})
 
 router.get('/:id', async (req, res) => {
     try {
