@@ -12,7 +12,7 @@ app.use('/user' , userRouter);
 app.use('/blog' , blogRouter);
 app.use('/resturant' , resturantRoute);
 
-mongoose.connect(process.env.MONGOOSE).then(()=>{
+mongoose.connect('mongodb+srv://Blog:blog@cluster0.4t24tdb.mongodb.net/').then(()=>{
     console.log('MongoDb connect');
 }).catch((error) => {
     console.log(error);

@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
             if (isPasswordValid) {
                 const token = await jwt.sign({
                     data: user
-                }, process.env.SECRET_KEY)
+                }, 'JFKJEKLJREKLNHRKLEJTHRJKLTHEJL')
                 sendResponse(res, 200, { user , token }, 'User_Login', false);
             } else {
                 sendResponse(res, 400, null, 'Password Does Not Exist', true);
