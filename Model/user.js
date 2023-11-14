@@ -36,16 +36,18 @@ router.post('/login', async (req, res) => {
         const { email, password } = req.body;
         const user = await userModel.findOne({ email: email });
         if (user) {
-            const isPasswordValid = await bcrypt.compareSync(password, user.password);
-            if (isPasswordValid) {
+            // const isPasswordValid = bcrypt.compareSync(password, user.password);
+            // if (isPasswordValid) {
                 const token = await jwt.sign({
                     data: user
                 }, 'JFKJEKLJREKLNHRKLEJTHRJKLTHEJL')
                 sendResponse(res, 200, { user , token }, 'User_Login', false);
-            } else {
-                sendResponse(res, 400, null, 'Password Does Not Exist', true);
-            }
-        } else {
+            // } 
+            // else {
+            //     sendResponse(res, 400, null, 'Password Does Not Exist', true);
+            // }
+        } 
+        else {
             sendResponse(res, 400, null, 'Email Does Not Exist', true);
         }
     } catch (err) {
